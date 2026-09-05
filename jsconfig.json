@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "paths": {
+      "~/*": ["./app/*"]
+    }
+  },
+  "include": ["app"],
+  "exclude": [
+    "app/routes/projects.slice",
+    "app/routes/projects.smart-sparrow",
+    "app/routes/projects.volkihar-knight"
+  ]
+}

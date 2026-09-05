@@ -1,0 +1,462 @@
+.summary {
+  height: 100vh;
+  width: 100%;
+  max-height: 1080px;
+  padding-bottom: var(--spaceL);
+  margin: 120px 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  @media (--mediaDesktop) {
+    margin: var(--space2XL) 0;
+  }
+
+  @media (--mediaTablet) {
+    height: auto;
+    margin: var(--space3XL) 0;
+  }
+
+  @media (--mediaMobile) {
+    padding-bottom: var(--space4XL);
+    margin-bottom: 0;
+  }
+
+  &[data-first='true'] {
+    margin-top: 0;
+
+    @media (--mediaTablet) {
+      margin-top: 0;
+    }
+  }
+}
+
+.content {
+  --textColumnWidth: 36%;
+
+  width: 100%;
+  max-width: var(--maxWidthL);
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  display: grid;
+  grid-template-columns: minmax(0, var(--textColumnWidth)) minmax(0, 1fr);
+  grid-column-gap: var(--space2XL);
+
+  .summary[data-alternate='true'] & {
+    grid-template-columns: minmax(0, 1fr) minmax(0, var(--textColumnWidth));
+  }
+
+  @media (--mediaLaptop) {
+    --textColumnWidth: 40%;
+  }
+
+  @media (--mediaTablet) {
+    .summary[data-alternate='true'] & {
+      grid-template-columns: 100%;
+    }
+
+    grid-template-columns: 100%;
+    flex-direction: column-reverse;
+    height: auto;
+  }
+}
+
+.details {
+  z-index: var(--zIndex1);
+  position: relative;
+  min-width: 0;
+
+  @media (--mediaTablet) {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 410px;
+    grid-row: 2;
+    grid-column: 1;
+    justify-self: center;
+  }
+}
+
+.preview {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  overflow: visible;
+}
+
+.model {
+  --width: 180%;
+  --aspectRatio: 12 / 10;
+
+  width: var(--width);
+  min-width: 0;
+  max-width: none;
+  aspect-ratio: var(--aspectRatio);
+  display: grid;
+  position: relative;
+  margin-inline: auto;
+  flex: 0 0 auto;
+}
+
+.model[data-device='laptop'] {
+  width: clamp(140%, 48vw, 180%);
+  top: clamp(4%, 5vw, 6%);
+  left: clamp(6%, 10vw, 14%);
+}
+
+.model[data-device='phone'] {
+  --width: 116%;
+  --aspectRatio: 7 / 10;
+
+  width: clamp(100%, 30vw, 116%);
+  top: 5%;
+  left: 0;
+}
+
+.model[data-device='laptop-phone'] {
+  --width: 180%;
+  --aspectRatio: 12 / 10;
+
+  width: clamp(135%, 44vw, 180%);
+  top: clamp(4%, 5vw, 6%);
+  left: clamp(4%, 8vw, 12%);
+}
+
+.loader {
+  opacity: 0;
+  transition: opacity 400ms ease 1000ms;
+
+  &[data-visible='true'] {
+    opacity: 1;
+  }
+}
+
+.svg {
+  opacity: 0;
+  transition: opacity 1200ms ease 1400ms;
+  fill: var(--textTitle);
+
+  &[data-visible='true'] {
+    opacity: var(--opacity);
+  }
+
+  &[data-device='laptop'],
+  &[data-device='laptop-phone'] {
+    position: absolute;
+    width: 100%;
+    right: -36%;
+    bottom: 24%;
+    transform: translateY(50%);
+
+    @media (--mediaTablet) {
+      width: 80%;
+      right: -10%;
+      bottom: 18%;
+    }
+
+    @media (--mediaMobile) {
+      right: 0;
+    }
+  }
+
+  &[data-device='phone'] {
+    position: absolute;
+    bottom: 23%;
+    transform: translateY(50%);
+    width: 100%;
+    transition-delay: 800ms;
+
+    @media (--mediaTablet) {
+      width: 80%;
+      bottom: 23%;
+    }
+  }
+}
+
+.index {
+  position: relative;
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: var(--spaceM);
+  align-items: center;
+  margin-bottom: var(--spaceXL);
+}
+
+.indexNumber {
+  font-size: var(--fontSizeBodyS);
+  font-weight: var(--fontWeightMedium);
+  color: var(--primary);
+  opacity: 0;
+  transition-property: opacity;
+  transition-timing-function: var(--bezierFastoutSlowin);
+  transition-duration: var(--durationM);
+  transition-delay: 1.3s;
+
+  @media (--mediaUseMotion) {
+    transition-property: transform, opacity;
+    transform: translateX(calc(var(--spaceM) * -1));
+  }
+
+  &[data-visible='true'] {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.title {
+  margin-bottom: var(--spaceL);
+  transition-property: opacity;
+  transition-timing-function: var(--bezierFastoutSlowin);
+  transition-duration: var(--durationXL);
+  transition-delay: var(--durationM);
+  opacity: 0;
+
+  @media (--mediaUseMotion) {
+    transition-property: transform, opacity;
+    transform: translate3d(0, var(--spaceL), 0);
+  }
+
+  &[data-visible='true'] {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.description {
+  margin-bottom: var(--spaceXL);
+  transition-property: opacity;
+  transition-timing-function: var(--bezierFastoutSlowin);
+  transition-duration: var(--durationXL);
+  transition-delay: var(--durationL);
+  opacity: 0;
+
+  @media (--mediaUseMotion) {
+    transition-property: transform, opacity;
+    transform: translate3d(0, var(--spaceL), 0);
+  }
+
+  &[data-visible='true'] {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.button {
+  transition-property: opacity;
+  transition-timing-function: var(--bezierFastoutSlowin);
+  transition-duration: var(--durationXL);
+  transition-delay: var(--durationXL);
+  transform: translate3d(0, var(--spaceL), 0);
+  opacity: 0;
+
+  @media (--mediaUseMotion) {
+    transition-property: transform, opacity;
+    transform: translate3d(0, var(--spaceL), 0);
+  }
+
+  &[data-visible='true'] {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/*
+ * Responsive project-image sizing
+ *
+ * Desktop:
+ * - Preserve the old oversized composition and deliberate offset.
+ * - Do not cap the model at 100% of the preview.
+ *
+ * Tablet/mobile:
+ * - Gradually bring the model back inside the available stage.
+ * - Keep the device aspect ratios fixed so the project image cannot
+ *   be stretched or squished by the wrapper.
+ */
+
+@media (max-width: 1100px) {
+  .summary {
+    height: auto;
+    min-height: 680px;
+    margin-block: clamp(64px, 8vw, 96px);
+    padding-inline: clamp(var(--spaceOuter), 5vw, var(--space3XL));
+  }
+
+  .content {
+    width: min(100%, 820px);
+    grid-template-columns: 100%;
+    row-gap: clamp(24px, 5vw, 56px);
+  }
+
+  .preview {
+    order: 1;
+    height: clamp(300px, 52vw, 500px);
+  }
+
+  .model[data-device='laptop'],
+  .model[data-device='laptop-phone'] {
+    width: min(140%, 680px);
+    left: 0;
+    top: 6%;
+  }
+
+  .model[data-device='phone'] {
+    width: min(108%, 360px);
+    left: 0;
+    top: 3%;
+  }
+
+  .details {
+    order: 2;
+    width: min(100%, 520px);
+    max-width: 100%;
+    margin-inline: auto;
+  }
+
+  .svg[data-device='laptop'],
+  .svg[data-device='laptop-phone'] {
+    width: min(100%, 560px);
+  }
+
+  .svg[data-device='phone'] {
+    width: min(100%, 340px);
+  }
+}
+
+@media (max-width: 1100px) and (orientation: landscape) {
+  .preview {
+    height: clamp(240px, 62vh, 380px);
+    overflow: visible;
+  }
+
+  .model[data-device='laptop'],
+  .model[data-device='laptop-phone'] {
+    width: min(140%, 680px);
+    max-width: none;
+    height: auto;
+    aspect-ratio: 12 / 10;
+    left: 0;
+    top: 2%;
+  }
+
+  .model[data-device='phone'] {
+    width: min(108%, 360px);
+    max-width: none;
+    height: auto;
+    aspect-ratio: 7 / 10;
+    left: 0;
+    top: 2%;
+  }
+}
+
+@media (max-width: 767px) {
+  .summary {
+    min-height: 0;
+    margin-block: clamp(40px, 10vw, 72px);
+    padding-inline: var(--spaceOuter);
+    padding-bottom: clamp(56px, 12vw, 96px);
+  }
+
+  .summary[data-first='true'] {
+    margin-top: 0;
+  }
+
+  .content {
+    width: 100%;
+    row-gap: clamp(20px, 6vw, 40px);
+  }
+
+  .preview {
+    height: clamp(220px, 64vw, 340px);
+  }
+
+  .model[data-device='laptop'],
+  .model[data-device='laptop-phone'] {
+    width: min(100%, 560px);
+    max-width: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  .model[data-device='phone'] {
+    width: min(86%, 300px);
+    max-width: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  .details {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .index {
+    grid-template-columns: clamp(52px, 16vw, 76px) minmax(0, 1fr);
+    margin-bottom: clamp(16px, 5vw, 28px);
+  }
+
+  .title {
+    margin-bottom: clamp(12px, 4vw, 20px);
+  }
+
+  .description {
+    margin-bottom: clamp(18px, 5vw, 28px);
+  }
+
+  .svg[data-device='laptop'],
+  .svg[data-device='laptop-phone'] {
+    width: min(100%, 420px);
+    right: 0;
+    bottom: 10%;
+  }
+
+  .svg[data-device='phone'] {
+    width: min(100%, 280px);
+    right: 0;
+    bottom: 10%;
+  }
+}
+
+@media (max-width: 420px) {
+  .summary {
+    padding-inline: 14px;
+  }
+
+  .preview {
+    height: 220px;
+  }
+
+  .model[data-device='laptop'],
+  .model[data-device='laptop-phone'] {
+    width: min(100%, 560px);
+    max-width: 100%;
+  }
+
+  .model[data-device='phone'] {
+    width: 82%;
+  }
+}
+
+/*
+ * Large desktop:
+ * Keep the old large model composition, but reduce only the section
+ * shell spacing so consecutive projects do not become excessively tall.
+ * The model itself is intentionally not capped here.
+ */
+@media (min-width: 1601px) {
+  .summary {
+    min-height: min(70vh, 760px);
+    margin-block: 48px;
+    padding-bottom: 40px;
+  }
+
+  .preview {
+    height: min(100%, 620px);
+  }
+}

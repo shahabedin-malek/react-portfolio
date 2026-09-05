@@ -1,0 +1,325 @@
+import tarmacTexture2Large from '~/assets/tarmac-mobile.jpg';
+import tarmacTextureLarge from '~/assets/tarmac-desktop.jpg';
+import tarmacTexturePlaceholder from '~/assets/tarmac-placeholder.jpg';
+
+// TARMAC preview aliases: the component references these variables, but the
+// original file only imported the large texture assets. Define all referenced
+// variables so SSR and the browser can render Home without a ReferenceError.
+const tarmacTexture = tarmacTextureLarge;
+const tarmacTexture2 = tarmacTexture2Large;
+const tarmacTexture2Placeholder = tarmacTexturePlaceholder;
+import citygatesTextureLarge from '~/assets/citygates-large.jpg';
+import citygatesTexturePlaceholder from '~/assets/citygates-placeholder.jpg';
+import citygatesTexture from '~/assets/citygates.png';
+import triadTextureLarge from '~/assets/triad-large.jpg';
+import triadTexture from '~/assets/triad.jpg';
+import triadTexturePlaceholder from '~/assets/triad-placeholder.jpg';
+
+import { Footer } from '~/components/footer';
+import { baseMeta } from '~/utils/meta';
+import { Intro } from './intro';
+import { Profile } from './profile';
+import { ProjectSummary } from './project-summary';
+
+import { useEffect, useRef, useState } from 'react';
+import config from '~/config.json';
+import styles from './home.module.css';
+
+// Prefetch draco decoder wasm
+export const links = () => {
+  return [
+    {
+      rel: 'prefetch',
+      href: '/draco/draco_wasm_wrapper.js',
+      as: 'script',
+      type: 'text/javascript',
+      importance: 'low',
+    },
+    {
+      rel: 'prefetch',
+      href: '/draco/draco_decoder.wasm',
+      as: 'fetch',
+      type: 'application/wasm',
+      importance: 'low',
+    },
+  ];
+};
+
+export const meta = () => {
+  return baseMeta({
+    title: 'Full Stack Developer',
+    description: `Portfolio of ${config.name} — Full Stack Developer with a background in IT Support, WordPress Development, technical problem solving, and AI-assisted development.`,
+  });
+};
+
+export const Home = () => {
+  const [visibleSections, setVisibleSections] = useState([]);
+  const [scrollIndicatorHidden, setScrollIndicatorHidden] = useState(false);
+  const [reducedMotionDetected, setReducedMotionDetected] = useState(false);
+  const [motionWarningDismissed, setMotionWarningDismissed] = useState(false);
+
+  const intro = useRef(null);
+  const projectOne = useRef(null);
+  const projectTwo = useRef(null);
+  const projectThree = useRef(null);
+  const details = useRef(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const updateMotionPreference = () => {
+      setReducedMotionDetected(motionQuery.matches);
+    };
+
+    updateMotionPreference();
+
+    if (typeof motionQuery.addEventListener === 'function') {
+      motionQuery.addEventListener('change', updateMotionPreference);
+      return () => motionQuery.removeEventListener('change', updateMotionPreference);
+    }
+
+    motionQuery.addListener(updateMotionPreference);
+    return () => motionQuery.removeListener(updateMotionPreference);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const sections = [
+      intro,
+      projectOne,
+      projectTwo,
+      projectThree,
+      details,
+    ];
+
+    const sectionObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+
+          const section = entry.target;
+
+          observer.unobserve(section);
+
+          setVisibleSections(prevSections => {
+            if (prevSections.includes(section)) {
+              return prevSections;
+            }
+
+            return [...prevSections, section];
+          });
+        });
+      },
+      {
+        rootMargin: '0px 0px -10% 0px',
+        threshold: 0.1,
+      }
+    );
+
+    const indicatorObserver = new IntersectionObserver(
+      ([entry]) => {
+        setScrollIndicatorHidden(!entry.isIntersecting);
+      },
+      {
+        rootMargin: '-100% 0px 0px 0px',
+      }
+    );
+
+    sections.forEach(section => {
+      const element = section.current;
+
+      if (element instanceof Element) {
+        sectionObserver.observe(element);
+      }
+    });
+
+    const introElement = intro.current;
+
+    if (introElement instanceof Element) {
+      indicatorObserver.observe(introElement);
+    }
+
+    return () => {
+      sectionObserver.disconnect();
+      indicatorObserver.disconnect();
+    };
+  }, []);
+
+  return (
+    <div className={styles.home}>
+      {reducedMotionDetected && !motionWarningDismissed && (
+        <div
+          className={styles.motionWarningOverlay}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="motion-warning-title"
+          aria-describedby="motion-warning-description"
+        >
+          <div className={styles.motionWarning}>
+            <div className={styles.motionWarningContent}>
+              <p className={styles.motionWarningEyebrow}>Animation settings</p>
+              <h2 id="motion-warning-title" className={styles.motionWarningTitle}>
+                Please turn on animation effects
+              </h2>
+              <p id="motion-warning-description" className={styles.motionWarningText}>
+                This portfolio uses animations and interactive 3D elements. Reduced-motion
+                settings can prevent some parts of the website from working or appearing
+                correctly.
+              </p>
+
+              <div className={styles.motionWarningInstructions}>
+                <h3>How to turn animations on</h3>
+
+                <details open>
+                  <summary>Windows</summary>
+                  <p>
+                    Open <strong>Settings → Accessibility → Visual effects</strong>, then turn
+                    <strong> Animation effects</strong> on. Refresh this page afterward.
+                  </p>
+                </details>
+
+                <details>
+                  <summary>macOS</summary>
+                  <p>
+                    Open <strong>System Settings → Accessibility → Display</strong>, then turn off
+                    <strong> Reduce motion</strong>. Return to this page and refresh it.
+                  </p>
+                </details>
+
+                <details>
+                  <summary>Linux</summary>
+                  <p>
+                    Open your desktop environment's <strong>Accessibility</strong> or
+                    <strong>Visual effects</strong> settings and disable <strong>Reduce motion</strong>
+                    or enable normal animations. Then refresh this page.
+                  </p>
+                </details>
+
+                <details>
+                  <summary>Other devices</summary>
+                  <p>
+                    Open your device's accessibility or display settings and disable
+                    <strong> Reduce Motion</strong>, <strong>Remove animations</strong>, or a
+                    similarly named setting, then refresh this page.
+                  </p>
+                </details>
+              </div>
+
+              <div className={styles.motionWarningActions}>
+                <button
+                  type="button"
+                  className={styles.motionWarningRefresh}
+                  onClick={() => {
+                    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                      window.location.reload();
+                    } else {
+                      setReducedMotionDetected(false);
+                    }
+                  }}
+                >
+                  I've changed the setting — check again
+                </button>
+
+                <button
+                  type="button"
+                  className={styles.motionWarningDismiss}
+                  onClick={() => setMotionWarningDismissed(true)}
+                >
+                  Continue anyway
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <Intro
+        id="intro"
+        sectionRef={intro}
+        scrollIndicatorHidden={scrollIndicatorHidden}
+      />
+
+      <ProjectSummary
+        id="project-1"
+        sectionRef={projectOne}
+        visible={visibleSections.includes(projectOne.current)}
+        index={1}
+        title="TRIAD"
+        description="Developed and maintained WordPress websites at TRIAD, optimized performance, managed hosting environments, and provided technical support to ensure reliable digital experiences."
+        buttonText="Visit Website"
+        buttonLink="https://triad.earth"
+        model={{
+          type: 'laptop',
+          symbol: 'triad-project',
+          alt: 'TRIAD website',
+          textures: [
+            {
+              srcSet: `${triadTexture} 1280w, ${triadTextureLarge} 2560w`,
+              placeholder: triadTexturePlaceholder,
+            },
+          ],
+        }}
+      />
+
+      <ProjectSummary
+        id="project-2"
+        alternate
+        sectionRef={projectTwo}
+        visible={visibleSections.includes(projectTwo.current)}
+        index={2}
+        title="TARMAC"
+        description="Supported the development and maintenance of the TARMAC website, improving performance, usability, and overall user experience."
+        buttonText="Visit Website"
+        buttonLink="https://tarmac.earth"
+        model={{
+          type: 'laptop-phone',
+          symbol: 'tarmac-project',
+          alt: 'TARMAC website',
+          textures: [
+            {
+              srcSet: `${tarmacTexture} 375w, ${tarmacTextureLarge} 750w`,
+              placeholder: tarmacTexturePlaceholder,
+            },
+            {
+              srcSet: `${tarmacTexture2} 375w, ${tarmacTexture2Large} 750w`,
+              placeholder: tarmacTexture2Placeholder,
+            },
+          ],
+        }}
+      />
+
+      <ProjectSummary
+        id="project-3"
+        sectionRef={projectThree}
+        visible={visibleSections.includes(projectThree.current)}
+        index={3}
+        title="CityGates"
+        description="Enhanced the CityGates website through development, maintenance, and technical improvements to strengthen its online presence."
+        buttonText="Visit Website"
+        buttonLink="https://citygates.earth"
+        model={{
+          type: 'laptop',
+          symbol: 'citygates-project',
+          alt: 'cityGates website',
+          textures: [
+            {
+              srcSet: `${citygatesTexture} 800w, ${citygatesTextureLarge} 1920w`,
+              placeholder: citygatesTexturePlaceholder,
+            },
+          ],
+        }}
+      />
+
+      <Profile
+        sectionRef={details}
+        visible={visibleSections.includes(details.current)}
+        id="details"
+      />
+
+      <Footer />
+    </div>
+  );
+};

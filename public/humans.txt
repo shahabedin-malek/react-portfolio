@@ -1,0 +1,90 @@
+     _____  _   _
+    / ____|| | | |
+   | (___  | |_| |
+    \___ \ |  _  |
+    ____) || | | |
+   |_____/ |_| |_|
+
+The humans.txt file documents the people, technologies,
+and creative resources behind this website.
+More information: humanstxt.org
+
+_______________________________________________________________________________
+
+FULLSTACK DEVELOPER | フルスタックデベロッパー
+
+Shahabedin Malek
+
+AI-assisted creative developer exploring the intersection
+of design, technology, and interactive web experiences.
+
+I use AI as a creative and coding partner to turn ideas
+into working digital experiences, while developing my
+UI/UX skills through Google's UX Design program.
+
+Design & Creative Tools:
+Figma
+Adobe Photoshop
+
+Development:
+React
+Remix
+JavaScript
+Three.js
+Framer Motion
+Vite
+
+_______________________________________________________________________________
+
+TECHNOLOGY | テクノロジー
+
+React
+Remix
+Three.js
+Framer Motion
+Vite
+CSS Modules
+
+_______________________________________________________________________________
+
+FONTS | フォント
+
+Gotham
+IPA Gothic Regular
+Hiragino Kaku Gothic W8
+
+_______________________________________________________________________________
+
+GRAPHIC & MEDIA ASSETS | グラフィック & メディア
+
+Original interface designs
+Project screenshots
+3D models and interactive graphics
+Custom visual assets
+
+_______________________________________________________________________________
+
+CONTACT & SOCIAL | コンタクト & ソーシャル
+
+Facebook
+https://www.facebook.com/shahabedin.malek777
+
+Instagram
+https://www.instagram.com/shahabedin.malek
+
+GitHub
+https://github.com/shahabedin-malek
+
+_______________________________________________________________________________
+
+WEBSITE | ウェブサイト
+
+Personal Portfolio
+https://github.com/shahabedin-malek/react-portfolio
+
+_______________________________________________________________________________
+
+THANKS | ありがとう
+
+Built with curiosity, experimentation,
+and a passion for the web.

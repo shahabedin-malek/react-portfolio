@@ -1,0 +1,150 @@
+.home {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* Reduced-motion compatibility warning */
+.motionWarningOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 3vw, 2.5rem);
+  background: rgba(0, 0, 0, 0.82);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.motionWarning {
+  width: min(100%, 760px);
+  max-height: min(90vh, 900px);
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  background: #111;
+  color: #fff;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+}
+
+.motionWarningContent {
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.motionWarningEyebrow {
+  margin: 0 0 0.55rem;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.motionWarningTitle {
+  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  line-height: 1.08;
+}
+
+.motionWarningText {
+  margin: 1rem 0 0;
+  max-width: 65ch;
+  font-size: clamp(0.95rem, 1.7vw, 1.05rem);
+  line-height: 1.65;
+  opacity: 0.86;
+}
+
+.motionWarningInstructions {
+  margin-top: 1.5rem;
+}
+
+.motionWarningInstructions h3 {
+  margin: 0 0 0.65rem;
+  font-size: 1rem;
+}
+
+.motionWarningInstructions details {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.8rem 0;
+}
+
+.motionWarningInstructions details:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.motionWarningInstructions summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.motionWarningInstructions p {
+  margin: 0.65rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  opacity: 0.78;
+}
+
+.motionWarningActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.motionWarningRefresh,
+.motionWarningDismiss {
+  min-height: 44px;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.motionWarningRefresh {
+  border: 1px solid #fff;
+  background: #fff;
+  color: #111;
+}
+
+.motionWarningDismiss {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: #fff;
+}
+
+.motionWarningRefresh:hover,
+.motionWarningDismiss:hover {
+  opacity: 0.82;
+}
+
+.motionWarningRefresh:focus-visible,
+.motionWarningDismiss:focus-visible,
+.motionWarningInstructions summary:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .motionWarningOverlay {
+    align-items: start;
+    padding: 0.75rem;
+  }
+
+  .motionWarning {
+    max-height: 94vh;
+    border-radius: 14px;
+  }
+
+  .motionWarningActions {
+    flex-direction: column;
+  }
+
+  .motionWarningRefresh,
+  .motionWarningDismiss {
+    width: 100%;
+  }
+}
+

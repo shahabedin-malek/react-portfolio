@@ -1,0 +1,1 @@
+export { default as FuzzyText } from './fuzzy-text';
