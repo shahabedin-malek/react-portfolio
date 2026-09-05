@@ -1,17 +1,11 @@
-```{=html}
 <p align="center">
-```
-`<img src="/public/favicon.svg" width="50" alt="Logo" />`{=html}
-```{=html}
+  <img src="./public/favicon.svg" width="50" alt="Logo" />
 </p>
-```
-```{=html}
+
 <h1 align="center">
-```
-Shahabedin Malek Portfolio
-```{=html}
+  Shahabedin Malek Portfolio
 </h1>
-```
+
 [![Site
 preview](/public/site-preview.png)](https://shahabedin-malek.github.io/react-portfolio)
 
