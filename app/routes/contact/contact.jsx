@@ -13,6 +13,7 @@ import { useFormInput } from '~/hooks';
 import { useRef } from 'react';
 import { cssProps, msToNum, numToMs } from '~/utils/style';
 import { baseMeta } from '~/utils/meta';
+import { sitePath } from '~/utils/site';
 import { Form, useActionData, useNavigation } from '@remix-run/react';
 import { json } from '@remix-run/cloudflare';
 import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
@@ -223,7 +224,7 @@ export const Contact = () => {
               className={styles.completeButton}
               data-status={status}
               style={getDelay(tokens.base.durationM)}
-              href="/"
+              href={sitePath('/')}
               icon="chevron-right"
             >
               Back to homepage

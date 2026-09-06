@@ -10,6 +10,7 @@ import { useInterval, usePrevious, useScrollToHash } from '~/hooks';
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { cssProps } from '~/utils/style';
 import config from '~/config.json';
+import { sitePath } from '~/utils/site';
 import { useHydrated } from '~/hooks/useHydrated';
 import styles from './intro.module.css';
 
@@ -112,7 +113,7 @@ export function Intro({ id, sectionRef, scrollIndicatorHidden, ...rest }) {
               </Heading>
             </header>
             <RouterLink
-              to="/#project-1"
+              to={sitePath('/#project-1')}
               className={styles.scrollIndicator}
               data-status={status}
               data-hidden={scrollIndicatorHidden}
@@ -121,7 +122,7 @@ export function Intro({ id, sectionRef, scrollIndicatorHidden, ...rest }) {
               <VisuallyHidden>Scroll to projects</VisuallyHidden>
             </RouterLink>
             <RouterLink
-              to="/#project-1"
+              to={sitePath('/#project-1')}
               className={styles.mobileScrollIndicator}
               data-status={status}
               data-hidden={scrollIndicatorHidden}

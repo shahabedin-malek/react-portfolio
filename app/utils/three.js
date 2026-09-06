@@ -1,12 +1,13 @@
 import { Cache, TextureLoader } from 'three';
 import { DRACOLoader, GLTFLoader } from 'three-stdlib';
+import { sitePath } from '~/utils/site';
 
 // Enable caching for all loaders
 Cache.enabled = true;
 
 const dracoLoader = new DRACOLoader();
 const gltfLoader = new GLTFLoader();
-dracoLoader.setDecoderPath('/draco/');
+dracoLoader.setDecoderPath(sitePath('/draco/'));
 gltfLoader.setDRACOLoader(dracoLoader);
 
 /**

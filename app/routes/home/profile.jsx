@@ -11,6 +11,7 @@ import { Text } from '~/components/text';
 import { Transition } from '~/components/transition';
 import { Fragment, useState } from 'react';
 import { media } from '~/utils/style';
+import { sitePath } from '~/utils/site';
 import katakana from './katakana.svg';
 import styles from './profile.module.css';
 
@@ -66,7 +67,7 @@ export const Profile = ({ id, visible, sectionRef }) => {
                 secondary
                 className={styles.button}
                 data-visible={visible}
-                href="/contact"
+                href={sitePath('/contact')}
                 icon="send"
               >
                 Send me a message

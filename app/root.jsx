@@ -13,15 +13,16 @@ import { createCookieSessionStorage, json } from '@remix-run/cloudflare';
 import { ThemeProvider, themeStyles } from '~/components/theme-provider';
 import GothamBook from '~/assets/fonts/gotham-book.woff2';
 import GothamMedium from '~/assets/fonts/gotham-medium.woff2';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Error } from '~/layouts/error';
 import { VisuallyHidden } from '~/components/visually-hidden';
 import { Navbar } from '~/layouts/navbar';
 import { Progress } from '~/components/progress';
 import config from '~/config.json';
+import { getCanonicalUrl, sitePath } from '~/utils/site';
 import styles from './root.module.css';
-import './reset.module.css';
-import './global.module.css';
+import './reset.css';
+import './global.css';
 
 export const links = () => [
   {
@@ -38,19 +39,16 @@ export const links = () => [
     type: 'font/woff2',
     crossOrigin: '',
   },
-  { rel: 'manifest', href: '/manifest.json' },
-  { rel: 'icon', href: '/favicon.ico' },
-  { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
-  { rel: 'shortcut_icon', href: '/shortcut.png', type: 'image/png', sizes: '64x64' },
-  { rel: 'apple-touch-icon', href: '/icon-256.png', sizes: '256x256' },
-  { rel: 'author', href: '/humans.txt', type: 'text/plain' },
+  { rel: 'manifest', href: sitePath('/manifest.json') },
+  { rel: 'icon', href: sitePath('/favicon.ico') },
+  { rel: 'icon', href: sitePath('/favicon.svg'), type: 'image/svg+xml' },
+  { rel: 'shortcut_icon', href: sitePath('/shortcut.png'), type: 'image/png', sizes: '64x64' },
+  { rel: 'apple-touch-icon', href: sitePath('/icon-256.png'), sizes: '256x256' },
+  { rel: 'author', href: sitePath('/humans.txt'), type: 'text/plain' },
 ];
 
 export const loader = async ({ request, context }) => {
-  const { url } = request;
-  const { pathname } = new URL(url);
-  const pathnamesliced = pathname.endsWith('/') ? pathname.slice(0, -1) : url;
-  const canonicalUrl = `${config.url}${pathnamesliced}`;
+  const canonicalUrl = getCanonicalUrl(request.url);
 
   const { getSession, commitSession } = createCookieSessionStorage({
     cookie: {
@@ -79,17 +77,29 @@ export const loader = async ({ request, context }) => {
 
 export default function App() {
   let { canonicalUrl, theme } = useLoaderData();
+  const [storedTheme, setStoredTheme] = useState(theme);
   const fetcher = useFetcher();
   const { state } = useNavigation();
 
+  useEffect(() => {
+    const savedTheme = window.localStorage.getItem('theme');
+
+    if (savedTheme === 'dark' || savedTheme === 'light') setStoredTheme(savedTheme);
+  }, []);
+
   if (fetcher.formData?.has('theme')) {
     theme = fetcher.formData.get('theme');
+  } else {
+    theme = storedTheme;
   }
 
   function toggleTheme(newTheme) {
+    const nextTheme = newTheme || (theme === 'dark' ? 'light' : 'dark');
+    setStoredTheme(nextTheme);
+    window.localStorage.setItem('theme', nextTheme);
     fetcher.submit(
-      { theme: newTheme ? newTheme : theme === 'dark' ? 'light' : 'dark' },
-      { action: '/api/set-theme', method: 'post' }
+      { theme: nextTheme },
+      { action: sitePath('/api/set-theme'), method: 'post' }
     );
   }
 

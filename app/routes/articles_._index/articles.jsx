@@ -12,6 +12,7 @@ import { Link as RouterLink, useLoaderData } from '@remix-run/react';
 import { useState, useEffect } from 'react';
 import { formatDate } from '~/utils/date';
 import { classes, cssProps } from '~/utils/style';
+import { sitePath } from '~/utils/site';
 import styles from './articles.module.css';
 
 function ArticlesPost({ slug, frontmatter, timecode, index }) {
@@ -58,7 +59,7 @@ function ArticlesPost({ slug, frontmatter, timecode, index }) {
       <RouterLink
 
         prefetch="intent"
-        to={`/articles/${slug}`}
+        to={sitePath(`/articles/${slug}`)}
         className={styles.postLink}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

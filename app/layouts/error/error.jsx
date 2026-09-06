@@ -8,6 +8,7 @@ import { Heading } from '~/components/heading';
 import { Text } from '~/components/text';
 import { Transition } from '~/components/transition';
 import styles from './error.module.css';
+import { sitePath } from '~/utils/site';
 import { Image } from '~/components/image';
 import flatlineSkull from './error-flatline.svg';
 
@@ -114,7 +115,7 @@ export function Error({ error }) {
                     iconHoverShift
                     className={styles.button}
                     data-visible={visible}
-                    href="/"
+                    href={sitePath('/')}
                     icon="chevron-right"
                   >
                     Back to homepage

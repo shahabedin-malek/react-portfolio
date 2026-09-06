@@ -1,6 +1,5 @@
 {
   "name": "portfolio",
-  "homepage": "https://shahabedin-malek.github.io/react-portfolio/",
   "description": "Portfolio site for Shahabedin Malek",
   "repository": "https://github.com/shahabedin-malek/react-portfolio/",
   "author": "Shahabedin Malek",
@@ -8,6 +7,9 @@
   "type": "module",
   "scripts": {
     "build": "remix vite:build",
+    "build:github": "DEPLOY_TARGET=github-pages npm run build",
+    "export:github": "DEPLOY_TARGET=github-pages npm run build && DEPLOY_TARGET=github-pages node ./scripts/export-github.cjs",
+    "export:vercel": "npm run build && SITE_ORIGIN=https://shahabedin-malek.vercel.app node ./scripts/export-github.cjs",
     "dev": "node ./scripts/dev.cjs && remix vite:dev",
     "start": "wrangler pages dev ./build/client",
     "postinstall": "node ./scripts/draco.cjs",
