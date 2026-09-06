@@ -5,6 +5,7 @@ const { dirname, join } = require('node:path');
 const root = process.cwd();
 const output = join(root, 'build', 'client');
 const isGithub = process.env.DEPLOY_TARGET === 'github-pages';
+const requestBase = isGithub ? '/react-portfolio' : '';
 const siteOrigin = isGithub
   ? 'https://shahabedin-malek.github.io/react-portfolio'
   : process.env.SITE_ORIGIN || '';
@@ -16,15 +17,19 @@ const routes = [
   '/contact',
 ];
 
-const server = spawn('npx', ['wrangler', 'pages', 'dev', output, '--port', '8788'], {
+const server = spawn(
+  'npx',
+  ['wrangler', 'pages', 'dev', output, '--port', '8788', '--local'],
+  {
   cwd: root,
   stdio: 'ignore',
-});
+  }
+);
 
 async function waitForServer() {
   for (let attempt = 0; attempt < 60; attempt += 1) {
     try {
-      const response = await fetch('http://127.0.0.1:8788/');
+      const response = await fetch(`http://127.0.0.1:8788${requestBase}/`);
       if (response.ok) return;
     } catch {}
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -34,7 +39,7 @@ async function waitForServer() {
 }
 
 async function exportRoute(pathname) {
-  const response = await fetch(`http://127.0.0.1:8788${pathname}`);
+  const response = await fetch(`http://127.0.0.1:8788${requestBase}${pathname}`);
   if (!response.ok) throw new Error(`${pathname} returned ${response.status}`);
 
   let html = await response.text();
