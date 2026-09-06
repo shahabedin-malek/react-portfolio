@@ -12,7 +12,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypePrism from '@mapbox/rehype-prism';
 
 export default defineConfig({
-  base: process.env.DEPLOY_TARGET === 'github-pages' ? '/react-portfolio/' : '/',
+  base: '/',
   assetsInclude: ['**/*.glb', '**/*.hdr', '**/*.glsl'],
   build: {
     assetsInlineLimit: 1024,
@@ -33,7 +33,7 @@ export default defineConfig({
           route('/', 'routes/home/route.js', { index: true });
         });
       },
-      basename: process.env.DEPLOY_TARGET === 'github-pages' ? '/react-portfolio' : '/',
+      basename: process.env.DEPLOY_TARGET === 'github-pages' ? '/react-portfolio/' : '/',
     }),
     jsconfigPaths(),
   ],

@@ -16,6 +16,8 @@ export function sitePath(pathname) {
     : import.meta.env.BASE_URL.replace(/\/$/, '');
   const path = pathname.startsWith('/') ? pathname : `/${pathname}`;
 
+  if (path === basePath || path.startsWith(`${basePath}/`)) return path;
+
   return `${basePath}${path}` || '/';
 }
 
