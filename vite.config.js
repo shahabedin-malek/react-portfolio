@@ -33,6 +33,7 @@ export default defineConfig({
           route('/', 'routes/home/route.js', { index: true });
         });
       },
+      basename: process.env.DEPLOY_TARGET === 'github-pages' ? '/react-portfolio' : '/',
     }),
     jsconfigPaths(),
   ],

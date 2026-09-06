@@ -78,6 +78,7 @@ export const loader = async ({ request, context }) => {
 export default function App() {
   let { canonicalUrl, theme } = useLoaderData();
   const [storedTheme, setStoredTheme] = useState(theme);
+  const isStaticExport = import.meta.env.VITE_STATIC_EXPORT === 'true';
   const fetcher = useFetcher();
   const { state } = useNavigation();
 
@@ -97,10 +98,12 @@ export default function App() {
     const nextTheme = newTheme || (theme === 'dark' ? 'light' : 'dark');
     setStoredTheme(nextTheme);
     window.localStorage.setItem('theme', nextTheme);
-    fetcher.submit(
-      { theme: nextTheme },
-      { action: sitePath('/api/set-theme'), method: 'post' }
-    );
+    if (!isStaticExport) {
+      fetcher.submit(
+        { theme: nextTheme },
+        { action: sitePath('/api/set-theme'), method: 'post' }
+      );
+    }
   }
 
   useEffect(() => {
