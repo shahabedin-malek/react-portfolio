@@ -11,7 +11,6 @@ import { NavToggle } from './nav-toggle';
 import { ThemeToggle } from './theme-toggle';
 import { navLinks, socialLinks } from './nav-data';
 import config from '~/config.json';
-import { sitePath } from '~/utils/site';
 import styles from './navbar.module.css';
 
 export const Navbar = () => {
@@ -145,7 +144,7 @@ export const Navbar = () => {
       <RouterLink
 
         prefetch="intent"
-        to={sitePath(location.pathname === '/' ? '/#intro' : '/')}
+        to={location.pathname === '/' ? '/#intro' : '/'}
         data-navbar-item
         className={styles.logo}
         aria-label={`${config.name}, ${config.role}`}
@@ -160,7 +159,7 @@ export const Navbar = () => {
             <RouterLink
 
               prefetch="intent"
-              to={sitePath(pathname)}
+              to={pathname}
               key={label}
               data-navbar-item
               className={styles.navLink}
@@ -180,7 +179,7 @@ export const Navbar = () => {
               <RouterLink
 
                 prefetch="intent"
-                to={sitePath(pathname)}
+                to={pathname}
                 key={label}
                 className={styles.mobileNavLink}
                 data-visible={visible}
