@@ -12,7 +12,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypePrism from '@mapbox/rehype-prism';
 
 export default defineConfig({
-  base: '/',
+  base: process.env.DEPLOY_TARGET === 'github-pages' ? '/react-portfolio/' : '/',
   assetsInclude: ['**/*.glb', '**/*.hdr', '**/*.glsl'],
   build: {
     assetsInlineLimit: 1024,
