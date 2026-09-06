@@ -77,9 +77,9 @@ async function rewriteAssetReferences() {
         const filePath = join(output, file);
         const contents = await readFile(filePath, 'utf8');
         const rewritten = contents
-          .replaceAll('"/assets/', '"/react-portfolio/assets/')
-          .replaceAll("'/assets/", "'/react-portfolio/assets/")
-          .replaceAll('url(/assets/', 'url(/react-portfolio/assets/');
+          .replaceAll('/assets/', '/react-portfolio/assets/')
+          .replaceAll('/draco/', '/react-portfolio/draco/')
+          .replaceAll('/react-portfolio/react-portfolio/', '/react-portfolio/');
 
         if (rewritten !== contents) await writeFile(filePath, rewritten);
       })
