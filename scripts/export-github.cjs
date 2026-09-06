@@ -79,6 +79,7 @@ async function rewriteAssetReferences() {
         const rewritten = contents
           .replaceAll('/assets/', '/react-portfolio/assets/')
           .replaceAll('/draco/', '/react-portfolio/draco/')
+          .replaceAll('/static/', '/react-portfolio/static/')
           .replaceAll('/react-portfolio/react-portfolio/', '/react-portfolio/');
 
         if (rewritten !== contents) await writeFile(filePath, rewritten);
